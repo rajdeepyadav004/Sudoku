@@ -7,7 +7,7 @@ using namespace std;
 
 class BackTrackSolver{
 public:
-    Index findUnassigned(vector<vector<int>> entries);
+    Index findUnassigned(Sudoku sudoku);
     set<int> possibilities(Sudoku sudoku, Index unassigned);
     bool Solver(Sudoku& sudoku);
 };

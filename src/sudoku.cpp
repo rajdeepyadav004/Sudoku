@@ -6,25 +6,23 @@ bool IsUnique(vector<int> list){
 	return (it==list.end());
 };
 
-
 Sudoku::Sudoku(vector<vector<int>> arg_entries){
 	entries = arg_entries;
 }
 
 Sudoku::Sudoku(string line){
+	entries.resize(9, vector<int>(9,0));
 	for(int i=0;i<9;i++)
 	{
-		vector<int>row;
 		for(int j=0;j<9;j++)
 		{
 			int position = i*9 + j;
 			char entry = line[position];
 			if(entry == '.')
-				row.push_back(0);
+				(*this)[{i,j}] = 0;
 			else
-				row.push_back((int)entry - (int)'0');
+				(*this)[{i,j}]= (int)entry - (int)'0';
 		}
-		entries.push_back(row);
 	}
 }
 
@@ -122,7 +120,7 @@ vector<int> Sudoku::getRow(Index index){
 	vector<Index> rowIndices = getRowIndices(index);
 	vector<int> row;
 	for(Index index: rowIndices)
-		row.push_back(entries[get<0>(index)][get<1>(index)]);
+		row.push_back((*this)[index]);
 	return row;
 }
 
@@ -130,7 +128,7 @@ vector<int> Sudoku::getCol(Index index){
 	vector<Index> colIndices = getColIndices(index);
 	vector<int> col;
 	for(Index index: colIndices)
-		col.push_back(entries[get<0>(index)][get<1>(index)]);
+		col.push_back((*this)[index]);
 	return col;
 }
 
@@ -138,15 +136,23 @@ vector<int> Sudoku::getBox(Index index){
 	vector<Index> BoxIndices = getBoxIndices(index);
 	vector<int> Box;
 	for(Index index: BoxIndices)
-		Box.push_back(entries[get<0>(index)][get<1>(index)]);
+		Box.push_back((*this)[index]);
 	return Box;
+}
+
+int& Sudoku::operator[](const Index& index){
+	return entries[get<0>(index)][get<1>(index)];
+}
+
+int Sudoku::operator[](const Index& index) const{
+	return entries[get<0>(index)][get<1>(index)];
 }
 
 ostream& operator<<(ostream& os, const Sudoku& sudoku){
 	os<<endl;
 	for(int i=0;i<9;i++){
 		for(int j=0;j<9;j++)
-			os<<sudoku.entries[i][j]<<" ";
+			os<<sudoku[{i,j}]<<" ";
 		os<<endl;
 	}
 	os<<endl;

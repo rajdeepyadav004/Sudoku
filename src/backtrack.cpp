@@ -1,13 +1,13 @@
 #include<solvers.h>
 
 
-Index BackTrackSolver::findUnassigned(vector<vector<int>> entries){
-    for(int i=0;i<entries.size();i++)
-        for(int j=0;j<entries[0].size();j++)
-            if(entries[i][j]==0)
-                return make_tuple(i,j);
+Index BackTrackSolver::findUnassigned(Sudoku sudoku){
+    for(int i=0;i<9;i++)
+        for(int j=0;j<9;j++)
+            if(sudoku[{i,j}]==0)
+                return {i,j};
 
-    return make_tuple(-1,-1);
+    return {-1,-1};
 }
 
 set<int> BackTrackSolver::possibilities(Sudoku sudoku, Index unassigned){
@@ -34,19 +34,19 @@ bool BackTrackSolver::Solver(Sudoku& sudoku){
     if(sudoku.checkComplete())
         return true;
     
-    Index unassigned = this->findUnassigned(sudoku.entries);
+    Index unassigned = this->findUnassigned(sudoku);
 
     set<int> possibilities = this->possibilities(sudoku, unassigned); 
     if(possibilities.size()==0)
         return false;
     
     for(const int& possibility: possibilities){
-        sudoku.entries[get<0>(unassigned)][get<1>(unassigned)] = possibility;
+        sudoku[unassigned] = possibility;
         bool solved = Solver(sudoku);
         if(solved)
             return true;
     }
 
-    sudoku.entries[get<0>(unassigned)][get<1>(unassigned)] = 0;
+    sudoku[unassigned] = 0;
     return false;
 }
