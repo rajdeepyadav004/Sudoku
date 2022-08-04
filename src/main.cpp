@@ -22,31 +22,23 @@ public:
 		return vector<int>(-1,-1);
 	}
 
-	set<int> possibilities(vector<vector<int>> entries, vector<int> unassigned){
+	set<int> possibilities(Sudoku sudoku, vector<int> unassigned){
 		
 		set<int> res;
 		for(int i=1;i<10;i++)
 			res.insert(i);
 		
-		int row = unassigned[0];
-		int column = unassigned[1];
-		int box_x = row / 3, box_y = column/3;
-
 		// row elimination
-		for(const int& entry: entries[row])
+		for(const int& entry: sudoku.getRow(unassigned))
 			res.erase(entry);
 		
 		// column elimination
-		for(int i=0;i<9;i++){
-			res.erase(entries[i][column]);
-		}
+		for(const int& entry: sudoku.getCol(unassigned))
+			res.erase(entry);
 
 		// box elimination
-		for(int i=box_x*3;i<box_x*3+3;i++){
-			for(int j=box_y*3;j<box_y*3+3;j++){
-				res.erase(entries[i][j]);
-			}
-		}
+		for(const int& entry: sudoku.getBox(unassigned))
+			res.erase(entry);
 
 		return res;
 	}
@@ -57,7 +49,7 @@ public:
 			
 			vector<int> unassigned = this->findUnassigned(sudoku.entries);
 
-			set<int> possibilities = this->possibilities(sudoku.entries, unassigned); 
+			set<int> possibilities = this->possibilities(sudoku, unassigned); 
 			if(possibilities.size()==0)
 				return false;
 			
@@ -190,16 +182,12 @@ vector<Sudoku> PuzzleListFromFile(string filename, int num_puzzles){
 
 int main(){
 	
-	vector<Sudoku> puzzles = PuzzleListFromFile("..\\data\\puzzles0_kaggle", 1);
+	vector<Sudoku> puzzles = PuzzleListFromFile("..\\data\\puzzles0_kaggle", 10);
 	
 	for(Sudoku& puzzle: puzzles){
-		cout<<puzzle;
-		printVector(puzzle.getRow({4,5}));
-		printVector(puzzle.getCol({4,5}));
-		printVector(puzzle.getBox({4,5}));
-		// BackTrackSolver mySolver;
-		// mySolver.Solver(puzzle);
-		// cout<<puzzle.CheckCorrect()<<endl;
+		BackTrackSolver mySolver;
+		mySolver.Solver(puzzle);
+		cout<<puzzle.CheckCorrect()<<endl;
 	}
 
 	return 0;
