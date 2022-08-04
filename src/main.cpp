@@ -193,10 +193,13 @@ int main(){
 	vector<Sudoku> puzzles = PuzzleListFromFile("..\\data\\puzzles0_kaggle", 1);
 	
 	for(Sudoku& puzzle: puzzles){
-		
-		BackTrackSolver mySolver;
-		mySolver.Solver(puzzle);
-		cout<<puzzle.CheckCorrect()<<endl;
+		cout<<puzzle;
+		printVector(puzzle.getRow({4,5}));
+		printVector(puzzle.getCol({4,5}));
+		printVector(puzzle.getBox({4,5}));
+		// BackTrackSolver mySolver;
+		// mySolver.Solver(puzzle);
+		// cout<<puzzle.CheckCorrect()<<endl;
 	}
 
 	return 0;

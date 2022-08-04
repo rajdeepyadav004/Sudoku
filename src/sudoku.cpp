@@ -1,6 +1,5 @@
 #include <sudoku.h>
 
-
 bool IsUnique(vector<int> list){
 	sort(list.begin(), list.end());
 	auto it = unique(list.begin(), list.end());
@@ -119,6 +118,29 @@ vector<vector<int>> Sudoku::getBoxIndices(vector<int> index){
 	return BoxIndices;
 }
 
+vector<int> Sudoku::getRow(vector<int> index){
+	vector<vector<int>> rowIndices = getRowIndices(index);
+	vector<int> row;
+	for(vector<int> index: rowIndices)
+		row.push_back(entries[index[0]][index[1]]);
+	return row;
+}
+
+vector<int> Sudoku::getCol(vector<int> index){
+	vector<vector<int>> colIndices = getColIndices(index);
+	vector<int> col;
+	for(vector<int> index: colIndices)
+		col.push_back(entries[index[0]][index[1]]);
+	return col;
+}
+
+vector<int> Sudoku::getBox(vector<int> index){
+	vector<vector<int>> BoxIndices = getBoxIndices(index);
+	vector<int> Box;
+	for(vector<int> index: BoxIndices)
+		Box.push_back(entries[index[0]][index[1]]);
+	return Box;
+}
 
 ostream& operator<<(ostream& os, const Sudoku& sudoku){
 	os<<endl;
