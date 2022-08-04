@@ -153,3 +153,22 @@ ostream& operator<<(ostream& os, const Sudoku& sudoku){
 	return os;
 }
 
+vector<Sudoku> PuzzleListFromFile(string filename, int num_puzzles){
+
+	ifstream file(filename);
+	vector<Sudoku> puzzles;
+	string puzzle;
+	int count = 0;
+	while(getline(file, puzzle)){
+
+		if(puzzle.size()==0 || puzzle[0]=='#')
+			continue;
+		puzzles.push_back(Sudoku(string(puzzle)));
+		
+		++count;
+		if(count==num_puzzles)
+			break;
+
+	}
+	return puzzles;
+}

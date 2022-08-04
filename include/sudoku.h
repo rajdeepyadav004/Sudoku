@@ -29,4 +29,6 @@ public:
 	friend class BackTrackPlus;
 };
 
+vector<Sudoku> PuzzleListFromFile(string filename, int num_puzzles);
+
 #endif
