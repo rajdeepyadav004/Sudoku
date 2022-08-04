@@ -14,7 +14,10 @@ public:
     Sudoku(vector<vector<int>> arg_entries);
     Sudoku(string line);
     bool checkComplete(); 
-    bool CheckCorrect(); 
+    bool CheckCorrect();
+    vector<vector<int>> getRowIndices(vector<int> index);
+    vector<vector<int>> getColIndices(vector<int> index);
+    vector<vector<int>> getBoxIndices(vector<int> index);
 	
 	friend ostream& operator<<(ostream& os, const Sudoku& sudoku);
 	friend class BackTrackSolver;

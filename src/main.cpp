@@ -4,6 +4,12 @@
 
 using namespace std;
 
+inline void printVector(vector<int> vec){
+	for(auto ele: vec)
+		cout<<ele<<" ";
+	cout<<endl;
+}
+
 class BackTrackSolver{
 	
 public:
@@ -184,12 +190,14 @@ vector<Sudoku> PuzzleListFromFile(string filename, int num_puzzles){
 
 int main(){
 	
-	vector<Sudoku> puzzles = PuzzleListFromFile("..\\data\\puzzles0_kaggle", 10);
+	vector<Sudoku> puzzles = PuzzleListFromFile("..\\data\\puzzles0_kaggle", 1);
 	
 	for(Sudoku& puzzle: puzzles){
+		
 		BackTrackSolver mySolver;
 		mySolver.Solver(puzzle);
 		cout<<puzzle.CheckCorrect()<<endl;
 	}
+
 	return 0;
 }

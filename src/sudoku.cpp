@@ -75,6 +75,51 @@ bool Sudoku::CheckCorrect(){
 	return true;
 }
 
+vector<vector<int>> Sudoku::getRowIndices(vector<int> index){
+	int row = index[0];
+	int col = index[1];
+	vector<vector<int>> RowIndices;
+	for(int j=0;j<9;j++)
+	{
+		if(j==col)
+			continue;
+		RowIndices.push_back(vector<int>{row,j});
+	}
+	return RowIndices;
+}
+
+vector<vector<int>> Sudoku::getColIndices(vector<int> index){
+	int row = index[0];
+	int col = index[1];
+	vector<vector<int>> ColIndices;
+	for(int i=0;i<9;i++)
+	{
+		if(i==row)
+			continue;
+		ColIndices.push_back(vector<int>{i,col});
+	}
+	return ColIndices;
+}
+
+vector<vector<int>> Sudoku::getBoxIndices(vector<int> index){
+	int row = index[0];
+	int col = index[1];
+	int box_x = row/3;
+	int box_y = col/3;
+
+	vector<vector<int>> BoxIndices;
+	for(int i=3*box_x;i<3*box_x+3;i++)
+	{
+		for(int j=3*box_y;j<3*box_y+3;j++){
+			if(i==row && j==col)
+				continue;
+			BoxIndices.push_back(vector<int>{i,j});
+		}
+	}
+	return BoxIndices;
+}
+
+
 ostream& operator<<(ostream& os, const Sudoku& sudoku){
 	os<<endl;
 	for(int i=0;i<9;i++){
