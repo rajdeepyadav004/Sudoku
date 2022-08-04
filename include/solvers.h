@@ -6,11 +6,14 @@
 using namespace std;
 
 class BackTrackSolver{
-
 public:
-    vector<int> findUnassigned(vector<vector<int>> entries);
-    set<int> possibilities(Sudoku sudoku, vector<int> unassigned);
+    Index findUnassigned(vector<vector<int>> entries);
+    set<int> possibilities(Sudoku sudoku, Index unassigned);
     bool Solver(Sudoku& sudoku);
 };
+
+// // Wavefunction Collapse backtrack
+// class WFCBackTrack{
+// };
 
 #endif

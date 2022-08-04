@@ -74,71 +74,71 @@ bool Sudoku::CheckCorrect(){
 	return true;
 }
 
-vector<vector<int>> Sudoku::getRowIndices(vector<int> index){
-	int row = index[0];
-	int col = index[1];
-	vector<vector<int>> RowIndices;
+vector<Index> Sudoku::getRowIndices(Index index){
+	int row = get<0>(index);
+	int col = get<1>(index);
+	vector<Index> RowIndices;
 	for(int j=0;j<9;j++)
 	{
 		if(j==col)
 			continue;
-		RowIndices.push_back(vector<int>{row,j});
+		RowIndices.push_back(make_tuple(row,j));
 	}
 	return RowIndices;
 }
 
-vector<vector<int>> Sudoku::getColIndices(vector<int> index){
-	int row = index[0];
-	int col = index[1];
-	vector<vector<int>> ColIndices;
+vector<Index> Sudoku::getColIndices(Index index){
+	int row = get<0>(index);
+	int col = get<1>(index);
+	vector<Index> ColIndices;
 	for(int i=0;i<9;i++)
 	{
 		if(i==row)
 			continue;
-		ColIndices.push_back(vector<int>{i,col});
+		ColIndices.push_back(make_tuple(i,col));
 	}
 	return ColIndices;
 }
 
-vector<vector<int>> Sudoku::getBoxIndices(vector<int> index){
-	int row = index[0];
-	int col = index[1];
+vector<Index> Sudoku::getBoxIndices(Index index){
+	int row = get<0>(index);
+	int col = get<1>(index);
 	int box_x = row/3;
 	int box_y = col/3;
 
-	vector<vector<int>> BoxIndices;
+	vector<Index> BoxIndices;
 	for(int i=3*box_x;i<3*box_x+3;i++)
 	{
 		for(int j=3*box_y;j<3*box_y+3;j++){
 			if(i==row && j==col)
 				continue;
-			BoxIndices.push_back(vector<int>{i,j});
+			BoxIndices.push_back(make_tuple(i,j));
 		}
 	}
 	return BoxIndices;
 }
 
-vector<int> Sudoku::getRow(vector<int> index){
-	vector<vector<int>> rowIndices = getRowIndices(index);
+vector<int> Sudoku::getRow(Index index){
+	vector<Index> rowIndices = getRowIndices(index);
 	vector<int> row;
-	for(vector<int> index: rowIndices)
-		row.push_back(entries[index[0]][index[1]]);
+	for(Index index: rowIndices)
+		row.push_back(entries[get<0>(index)][get<1>(index)]);
 	return row;
 }
 
-vector<int> Sudoku::getCol(vector<int> index){
-	vector<vector<int>> colIndices = getColIndices(index);
+vector<int> Sudoku::getCol(Index index){
+	vector<Index> colIndices = getColIndices(index);
 	vector<int> col;
-	for(vector<int> index: colIndices)
-		col.push_back(entries[index[0]][index[1]]);
+	for(Index index: colIndices)
+		col.push_back(entries[get<0>(index)][get<1>(index)]);
 	return col;
 }
 
-vector<int> Sudoku::getBox(vector<int> index){
-	vector<vector<int>> BoxIndices = getBoxIndices(index);
+vector<int> Sudoku::getBox(Index index){
+	vector<Index> BoxIndices = getBoxIndices(index);
 	vector<int> Box;
-	for(vector<int> index: BoxIndices)
-		Box.push_back(entries[index[0]][index[1]]);
+	for(Index index: BoxIndices)
+		Box.push_back(entries[get<0>(index)][get<1>(index)]);
 	return Box;
 }
 
